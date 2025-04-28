@@ -5,10 +5,12 @@ import (
 	"image/color"
 	"log"
 	"math/rand"
+	"os"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 const (
@@ -83,6 +85,10 @@ func (g *Game) Update() error {
 
 	g.scrolled += 1.0 // Track total scrolled amount
 
+	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+		os.Exit(0)
+	}
+
 	return nil
 }
 
@@ -108,7 +114,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 
 	// Display FPS
-	debugMsg := "FPS: " + fmt.Sprintf("%.2f", ebiten.ActualFPS())
+	debugMsg := fmt.Sprintf(`
+TPS:            %0.2f
+FPS:            %0.2f
+PRESS ESCAPE TO QUIT`,
+		ebiten.ActualTPS(), ebiten.ActualFPS())
 	ebitenutil.DebugPrint(screen, debugMsg)
 }
 
