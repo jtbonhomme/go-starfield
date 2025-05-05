@@ -7,8 +7,6 @@
 
 `go-starfield` is a Go library that provides an Entity-Component-System (ECS) framework tailored for use with the [Ebiten](https://ebiten.org/) game library. It simplifies the development of complex 2D games by organizing game logic into entities, components, and systems.
 
-![](go-starfield.gif)
-
 This repository provides a simple package to reproduce an infinite scrolling field of stars.
 
 ## Demo
@@ -23,11 +21,10 @@ import (
 )
 
 const (
-	ScreenWidth  = 800
-	ScreenHeight = 600
 	BaseSpeed    = -2.0 // Base speed of stars
 	MaxDistance  = 5.0  // Higher values = stars appear further away
 	MinDistance  = 1.0  // Minimum distance value
+	StarsCount   = 100  // Number of stars
 )
 
 type Game struct {
@@ -36,7 +33,7 @@ type Game struct {
 
 func NewGame() *Game {
 	return &Game{
-		starField: stars.New(ScreenWidth, ScreenHeight, 100, BaseSpeed, MaxDistance, MinDistance),
+		starField: stars.New(ScreenWidth, ScreenHeight, StarsCount, BaseSpeed, MaxDistance, MinDistance),
 	}
 }
 
