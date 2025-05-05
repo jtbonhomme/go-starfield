@@ -10,15 +10,15 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
-	"github.com/jtbonhomme/go-startfield/stars"
+	stars "github.com/jtbonhomme/go-startfield"
 )
 
 const (
 	ScreenWidth  = 800
 	ScreenHeight = 600
-	BaseSpeed    = 2.0 // Base speed of stars
-	MaxDistance  = 5.0 // Higher values = stars appear further away
-	MinDistance  = 1.0 // Minimum distance value
+	BaseSpeed    = -2.0 // Base speed of stars
+	MaxDistance  = 5.0  // Higher values = stars appear further away
+	MinDistance  = 1.0  // Minimum distance value
 )
 
 type Game struct {
@@ -27,7 +27,7 @@ type Game struct {
 
 func NewGame() *Game {
 	return &Game{
-		starField: stars.NewStarField(ScreenWidth, ScreenHeight, 100, BaseSpeed, MaxDistance, MinDistance),
+		starField: stars.New(ScreenWidth, ScreenHeight, 100, BaseSpeed, MaxDistance, MinDistance),
 	}
 }
 

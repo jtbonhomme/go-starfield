@@ -23,22 +23,22 @@ type StarField struct {
 	width       int
 	height      int
 	pixelImg    *ebiten.Image // Single pixel image for drawing stars
-	baseSpeed   float64
-	maxDistance float64
-	minDistance float64
+	BaseSpeed   float64       // Base speed of stars. A positive value makes stars fall down, negative makes them go up
+	MaxDistance float64       // Higher values = stars appear further away
+	MinDistance float64       // Minimum distance value
 }
 
-// NewStarField creates a new StarField with the given screen dimensions, star count, and speed/distance parameters
-func NewStarField(width, height, starCount int, baseSpeed, maxDistance, minDistance float64) *StarField {
+// New creates a new StarField with the given screen dimensions, star count, and speed/distance parameters
+func New(width, height, starCount int, baseSpeed, maxDistance, minDistance float64) *StarField {
 	sf := &StarField{
 		stars:       make([]Star, starCount),
 		rng:         rand.New(rand.NewSource(time.Now().UnixNano())),
 		width:       width,
 		height:      height,
 		pixelImg:    ebiten.NewImage(1, 1), // Create a 1x1 pixel image
-		baseSpeed:   baseSpeed,
-		maxDistance: maxDistance,
-		minDistance: minDistance,
+		BaseSpeed:   baseSpeed,
+		MaxDistance: maxDistance,
+		MinDistance: minDistance,
 	}
 
 	// Initialize stars with random positions and distances
@@ -74,6 +74,12 @@ func (sf *StarField) Update() {
 			sf.stars[i].Y = 0
 			sf.stars[i].X = sf.rng.Float64() * float64(sf.width)
 		}
+
+		// If star reach the top of the screen, reset it to the bottom
+		if sf.stars[i].Y < 0 {
+			sf.stars[i].Y = float64(sf.height)
+			sf.stars[i].X = sf.rng.Float64() * float64(sf.width)
+		}
 	}
 }
 
@@ -81,8 +87,8 @@ func (sf *StarField) Update() {
 func (sf *StarField) Draw(screen *ebiten.Image) {
 	for _, s := range sf.stars {
 		// Calculate color based on distance
-		brightness := uint8(255 * (sf.maxDistance - s.Distance) / (sf.maxDistance - sf.minDistance))
-		blue := uint8(200 * s.Distance / sf.maxDistance)
+		brightness := uint8(255 * (sf.MaxDistance - s.Distance) / (sf.MaxDistance - sf.MinDistance))
+		blue := uint8(200 * s.Distance / sf.MaxDistance)
 
 		// Set the pixel color
 		sf.pixelImg.Fill(color.RGBA{brightness, brightness, brightness + blue, 255})
