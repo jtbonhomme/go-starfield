@@ -1,4 +1,4 @@
-module github.com/jtbonhomme/go-startfield
+module github.com/jtbonhomme/go-starfield
 
 go 1.22.0
 

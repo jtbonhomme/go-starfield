@@ -10,7 +10,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
-	stars "github.com/jtbonhomme/go-startfield"
+	stars "github.com/jtbonhomme/go-starfield"
 )
 
 const (
