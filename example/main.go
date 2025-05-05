@@ -19,6 +19,8 @@ const (
 	BaseSpeed    = -2.0 // Base speed of stars
 	MaxDistance  = 5.0  // Higher values = stars appear further away
 	MinDistance  = 1.0  // Minimum distance value
+	Radius       = 3.0  // Radius of the stars
+	StarsCount   = 100  // Number of stars
 )
 
 type Game struct {
@@ -27,7 +29,7 @@ type Game struct {
 
 func NewGame() *Game {
 	return &Game{
-		starField: stars.New(ScreenWidth, ScreenHeight, 100, BaseSpeed, MaxDistance, MinDistance),
+		starField: stars.New(ScreenWidth, ScreenHeight, StarsCount, BaseSpeed, MaxDistance, MinDistance, Radius),
 	}
 }
 
