@@ -4,12 +4,12 @@
 [![issues](https://img.shields.io/github/issues/jtbonhomme/go-startfield)](https://github.com/jtbonhomme/go-startfield/issues)
 ![GitHub Release](https://img.shields.io/github/v/release/jtbonhomme/go-startfield)
 [![license](https://img.shields.io/github/license/jtbonhomme/go-startfield)](https://github.com/jtbonhomme/go-startfield/blob/main/LICENSE)
+
 `go-startfield` is a Go library that provides an Entity-Component-System (ECS) framework tailored for use with the [Ebiten](https://ebiten.org/) game library. It simplifies the development of complex 2D games by organizing game logic into entities, components, and systems.
 
 ![](go-starfield.gif)
 
 This repository provides a simple package to reproduce an infinite scrolling field of stars.
-It is intended to be used with the [Ebiten](https://ebiten.org/) game library.
 
 ## Demo
 
