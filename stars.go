@@ -16,6 +16,7 @@ type Star struct {
 	Distance float64 // Distance factor (1.0 = closest, MaxDistance = furthest)
 	Speed    float64 // The speed at which this star falls
 	Radius   float32 // Radius of the star
+	distance float64 // Distance factor (1.0 = closest, MaxDistance = furthest)
 }
 
 // StarField represents a collection of stars
@@ -69,11 +70,32 @@ func New(width, height, starCount int, baseSpeed, maxDistance, minDistance, radi
 			Distance: distance,
 			Speed:    baseSpeed / distance, // Speed inversely proportional to distance
 			Radius:   r,
+			distance: distance,
 		}
 
 	}
 
 	return sf
+}
+
+// Left moves the star field to the left
+func (sf *StarField) Left(shift float64) {
+	for i := range sf.stars {
+		sf.stars[i].X -= shift / sf.stars[i].distance
+		if sf.stars[i].X < 0 {
+			sf.stars[i].X = float64(sf.width)
+		}
+	}
+}
+
+// Right moves the star field to the right
+func (sf *StarField) Right(shift float64) {
+	for i := range sf.stars {
+		sf.stars[i].X += shift / sf.stars[i].distance
+		if sf.stars[i].X > float64(sf.width) {
+			sf.stars[i].X = 0
+		}
+	}
 }
 
 // Update updates the positions of the stars
@@ -101,14 +123,6 @@ func (sf *StarField) Draw(screen *ebiten.Image) {
 		// Calculate color based on distance
 		brightness := uint8(255 * (sf.MaxDistance - s.Distance) / (sf.MaxDistance - sf.MinDistance))
 		blue := uint8(200 * s.Distance / sf.MaxDistance)
-
-		// Set the pixel color
-		//sf.pixelImg.Fill(color.RGBA{brightness, brightness, brightness + blue, 255})
-
-		// Draw the pixel at the star's position
-		//op := &ebiten.DrawImageOptions{}
-		//op.GeoM.Translate(s.X, s.Y)
-		//screen.DrawImage(sf.pixelImg, op)
 
 		vector.DrawFilledCircle(screen, float32(s.X), float32(s.Y), s.Radius, color.RGBA{brightness, brightness, brightness + blue, 255}, false)
 	}

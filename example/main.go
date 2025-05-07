@@ -14,13 +14,14 @@ import (
 )
 
 const (
-	ScreenWidth  = 800
-	ScreenHeight = 600
-	BaseSpeed    = -2.0 // Base speed of stars
-	MaxDistance  = 5.0  // Higher values = stars appear further away
-	MinDistance  = 1.0  // Minimum distance value
-	Radius       = 3.0  // Radius of the stars
-	StarsCount   = 100  // Number of stars
+	ScreenWidth   = 800
+	ScreenHeight  = 600
+	BaseSpeed     = -2.0 // Base speed of stars
+	MaxDistance   = 5.0  // Higher values = stars appear further away
+	MinDistance   = 1.0  // Minimum distance value
+	Radius        = 3.0  // Radius of the stars
+	StarsCount    = 100  // Number of stars
+	ShiftDistance = 10   // Distance shift for stars
 )
 
 type Game struct {
@@ -39,6 +40,14 @@ func (g *Game) Update() error {
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
 		os.Exit(0)
+	}
+
+	if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
+		g.starField.Left(ShiftDistance)
+	}
+
+	if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
+		g.starField.Right(ShiftDistance)
 	}
 
 	return nil
